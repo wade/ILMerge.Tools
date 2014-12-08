@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Clean;Build">
+
+	<!-- ...........................................................................................
+		 Initialize Properties and ItemGroups
+		 ........................................................................................... -->
+
+	<PropertyGroup>
+		<PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+		<RootDir Condition="'$(RootDir)' == ''">$(MSBuildProjectDirectory)\..\</RootDir>
+		<BuildDir Condition="'$(BuildDir)' == ''">$(RootDir).build\</BuildDir>
+		<OutDir Condition="'$(OutDir)' == ''">$(BuildDir)out\$(Configuration)\</OutDir>
+		<BinDir Condition="'$(BinDir)' == ''">$(OutDir)bin\</BinDir>
+		<ProjectsOutDir Condition="'$(ProjectsOutDir)' == ''">$(OutDir)projects\</ProjectsOutDir>
+	</PropertyGroup>
+	<ItemGroup>
+		<DirsToMake Include="$(OutDir)" />
+		<DirsToMake Include="$(BinDir)" />
+		<DirsToMake Include="$(ProjectsOutDir)" />
+	</ItemGroup>
+
+	<!-- ...........................................................................................
+		 ProjectRefernece Item Group
+	     Defines the list of projects to Clean, Build, Rebiuld and/or RunTests
+		 ........................................................................................... -->
+
+	<ItemGroup>
+		<ProjectReference Include="$(RootDir)ILMerge.Tools.MSBuildToolTask\ILMerge.Tools.MSBuildToolTask.csproj">
+			<BinSourceDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask\</BinSourceDir>
+			<OutDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask\</OutDir>
+		</ProjectReference>
+	</ItemGroup>
+
+	<!-- ...........................................................................................
+		 Targets
+		 ........................................................................................... -->
+
+	<Target Name="Clean">
+		<!-- Need a better, smarter recursive 'Remove Directory' MSBuild task.
+			 Until it arrives, just make multiple calls to RemoveDir with ContinueOnError='true' on each call except the last one.
+			 This hadles edge cases where not everything is completely removed on the first call or two (or three).
+			 This is pretty lame, but it works.
+		-->
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<MSBuild
+			Projects="@(ProjectReference)"
+			Targets="Clean"
+			Properties="OutDir=%(ProjectReference.OutDir)"
+			/>
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="Build">
+		<CallTarget Targets="MakeDirs" />
+		<MSBuild
+			Projects="@(ProjectReference)"
+			Properties="SolutionDir=$(RootDir); OutDir=%(ProjectReference.OutDir); PostBuildEventUseInBuild=false"
+			/>
+		<CallTarget Targets="CopyBinFiles" />
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="Rebuild">
+		<CallTarget Targets="MakeDirs" />
+		<MSBuild
+			Projects="@(ProjectReference)"
+			Targets="Rebuild"
+			Properties="SolutionDir=$(RootDir); OutDir=%(ProjectReference.OutDir); PostBuildEventUseInBuild=false"
+			/>
+		<CallTarget Targets="CopyBinFiles" />
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="CopyBinFiles">
+		<CreateItem Include="%(ProjectReference.BinSourceDir)ILMerge.Tools.MSBuildToolTask.*.*" Exclude="%(ProjectReference.BinSourceDir)ILMerge.Tools.MSBuildToolTask.*.Test*.*">
+			<Output ItemName="BinFiles" TaskParameter="Include"></Output>
+		</CreateItem>
+		<Copy SourceFiles="@(BinFiles)" DestinationFolder="$(BinDir)" ContinueOnError="true" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="MakeDirs">
+		<MakeDir Directories="@(DirsToMake)" />
+	</Target>
+</Project>

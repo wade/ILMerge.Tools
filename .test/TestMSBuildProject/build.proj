@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Clean;Build;RunTests">
+
+	<!-- ...........................................................................................
+		 Initialize Properties and ItemGroups
+		 ........................................................................................... -->
+
+	<PropertyGroup>
+		<PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+		<ShouldRunTests Condition="'$(ShouldRunTests)' == ''">false</ShouldRunTests>
+		<RootDir Condition="'$(RootDir)' == ''">$(MSBuildProjectDirectory)\..\</RootDir>
+		<BuildDir Condition="'$(BuildDir)' == ''">$(RootDir).test\TestMSBuildProject\</BuildDir>
+		<OutDir Condition="'$(OutDir)' == ''">$(BuildDir)out\$(Configuration)\</OutDir>
+		<BinDir Condition="'$(BinDir)' == ''">$(OutDir)bin\</BinDir>
+		<BinMergedDir Condition="'$(BinMergedDir)' == ''">$(BinDir)merged\</BinMergedDir>
+		<NuGetPackagesDir Condition="'$(NuGetPackagesDir)' == ''">$(RootDir)packages\</NuGetPackagesDir>
+		<ProjectsOutDir Condition="'$(ProjectsOutDir)' == ''">$(OutDir)projects\</ProjectsOutDir>
+		<TestsOutDir Condition="'$(TestsOutDir)' == ''">$(OutDir)tests\</TestsOutDir>
+		<TestsResultsDir Condition="'$(TestsResultsDir)' == ''">$(OutDir)test-results\</TestsResultsDir>
+		<ILMergeToolTaskBinDir Condition="'$(ILMergeToolTaskBinDir)' == ''">$(RootDir).build\out\$(Configuration)\bin\</ILMergeToolTaskBinDir>
+	</PropertyGroup>
+	<ItemGroup>
+		<DirsToMake Include="$(OutDir)" />
+		<DirsToMake Include="$(BinDir)" />
+		<DirsToMake Include="$(BinMergedDir)" />
+		<DirsToMake Include="$(ProjectsOutDir)" />
+	</ItemGroup>
+	<ItemGroup>
+		<TestDirsToMake Include="$(TestsOutDir)" />
+		<TestDirsToMake Include="$(TestsResultsDir)" />
+	</ItemGroup>
+	<ItemGroup>
+		<ILMergeInputAssemblies Include="$(BinDir)ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly1.dll" />
+		<ILMergeInputAssemblies Include="$(BinDir)ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly2.dll" />
+		<ILMergeInputAssemblies Include="$(BinDir)ILMerge.Tools.MSBuildToolTask.Tests.Common.dll" />
+	</ItemGroup>
+
+	<!-- ...........................................................................................
+		 ProjectRefernece Item Group
+	     Defines the list of projects to Clean, Build, Rebiuld and/or RunTests
+		 ........................................................................................... -->
+
+	<ItemGroup>
+		<ProjectReference Include="$(RootDir)ILMerge.Tools.MSBuildToolTask.Tests.Common\ILMerge.Tools.MSBuildToolTask.Tests.Common.csproj">
+			<BinSourceDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask.Tests.Common\</BinSourceDir>
+			<OutDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask.Tests.Common\</OutDir>
+		</ProjectReference>
+
+		<ProjectReference Include="$(RootDir)ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly1\ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly1.csproj">
+			<BinSourceDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly1\</BinSourceDir>
+			<OutDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly1\</OutDir>
+		</ProjectReference>
+
+		<ProjectReference Include="$(RootDir)ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly2\ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly2.csproj">
+			<BinSourceDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly2\</BinSourceDir>
+			<OutDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly2\</OutDir>
+		</ProjectReference>
+
+		<ProjectReference Include="$(RootDir)ILMerge.Tools.MSBuildToolTask.Tests\ILMerge.Tools.MSBuildToolTask.Tests.csproj">
+			<BinSourceDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask.Tests\</BinSourceDir>
+			<OutDir>$(ProjectsOutDir)ILMerge.Tools.MSBuildToolTask.Tests\</OutDir>
+		</ProjectReference>
+	</ItemGroup>
+
+	<!-- ...........................................................................................
+		 Import External MSBuild Tasks
+		 ........................................................................................... -->
+
+	<UsingTask
+		AssemblyFile="$(ILMergeToolTaskBinDir)\ILMerge.Tools.MSBuildToolTask.dll"
+		TaskName="ILMerge.Tools.MSBuildToolTask.ILMergeTool"
+		/>
+
+	<UsingTask
+		AssemblyFile="$(NuGetPackagesDir)xunit.runners.1.9.2\tools\xunit.runner.msbuild.dll"
+		TaskName="Xunit.Runner.MSBuild.xunit"
+		/>
+
+	<!-- ...........................................................................................
+		 Targets
+		 ........................................................................................... -->
+
+	<Target Name="Clean">
+		<!-- Need a better, smarter recursive 'Remove Directory' MSBuild task.
+			 Until it arrives, just make multiple calls to RemoveDir with ContinueOnError='true' on each call except the last one.
+			 This hadles edge cases where not everything is completely removed on the first call or two (or three).
+			 This is pretty lame, but it works.
+		-->
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<MSBuild
+			Projects="@(ProjectReference)"
+			Targets="Clean"
+			Properties="OutDir=%(ProjectReference.OutDir)"
+			/>
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="Build">
+		<CallTarget Targets="MakeDirs" />
+		<MSBuild
+			Projects="@(ProjectReference)"
+			Properties="SolutionDir=$(RootDir); OutDir=%(ProjectReference.OutDir); PostBuildEvent="
+			/>
+		<CallTarget Targets="CopyBinFiles" />
+		<CallTarget Targets="MergeAssemblies" />
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="Rebuild">
+		<CallTarget Targets="MakeDirs" />
+		<MSBuild
+			Projects="@(ProjectReference)"
+			Targets="Rebuild"
+			Properties="SolutionDir=$(RootDir); OutDir=%(ProjectReference.OutDir); PostBuildEvent="
+			/>
+		<CallTarget Targets="CopyBinFiles" />
+		<CallTarget Targets="MergeAssemblies" />
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="RunTests" Condition="'$(ShouldRunTests)' == 'true'">
+		<MakeDir Directories="@(TestDirsToMake)" />
+
+		<CreateItem Include="$(TestsOutDir)**\*.Tests.dll">
+			<Output ItemName="TestAssemblies" TaskParameter="Include"></Output>
+		</CreateItem>
+		<Message Text="Preparing to run XUnit tests in the following assemblies: @(TestAssemblies)" />
+
+		<xunit
+			Assemblies="@(TestAssemblies)"
+			Html="$(TestsResultsDir)\TestResults.html"
+			ShadowCopy="false"
+			Verbose="true"
+			Xml="$(TestsResultsDir)\TestResults.xml"
+			/>
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="CopyBinFiles">
+		<CreateItem Include="%(ProjectReference.BinSourceDir)ILMerge.Tools.MSBuildToolTask.*.*">
+			<Output ItemName="BinFiles" TaskParameter="Include"></Output>
+		</CreateItem>
+		<Copy SourceFiles="@(BinFiles)" DestinationFolder="$(BinDir)" ContinueOnError="true" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="MakeDirs">
+		<MakeDir Directories="@(DirsToMake)" />
+	</Target>
+
+	<!-- ........................................................................................... -->
+
+	<Target Name="MergeAssemblies">
+		<ILMergeTool
+			InputAssemblies="@(ILMergeInputAssemblies)"
+			OutputFile="$(BinMergedDir)MergedTestAssembly.dll"
+			ToolPath="$(RootDir)ILMerge.Tools.MSBuildToolTask.Tests\ILMerge.exe"
+			/>
+	</Target>
+</Project>

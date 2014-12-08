@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILMerge.Tools.MSBuildToolTask", "ILMerge.Tools.MSBuildToolTask\ILMerge.Tools.MSBuildToolTask.csproj", "{49280A9A-B74C-443A-A158-D9C1BE0B99E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILMerge.Tools.MSBuildToolTask.Tests", "ILMerge.Tools.MSBuildToolTask.Tests\ILMerge.Tools.MSBuildToolTask.Tests.csproj", "{AD41F572-453B-4A02-8BF2-06425C6F6AC4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3D68B86E-9CDB-4438-BEB2-12760F379F58} = {3D68B86E-9CDB-4438-BEB2-12760F379F58}
+		{EF1378C2-9119-47EE-88EA-37EC92E3F8B7} = {EF1378C2-9119-47EE-88EA-37EC92E3F8B7}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B16AFEAE-4366-4AE2-A827-8AF81B5A507C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly1", "ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly1\ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly1.csproj", "{3D68B86E-9CDB-4438-BEB2-12760F379F58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly2", "ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly2\ILMerge.Tools.MSBuildToolTask.Tests.TestAssembly2.csproj", "{EF1378C2-9119-47EE-88EA-37EC92E3F8B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILMerge.Tools.MSBuildToolTask.Tests.Common", "ILMerge.Tools.MSBuildToolTask.Tests.Common\ILMerge.Tools.MSBuildToolTask.Tests.Common.csproj", "{28453C7F-EEB0-47B3-8A21-C6C68EAB1ED6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{6A4875D0-D97E-401F-A21B-93592FCAED13}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		ReadMe.md = ReadMe.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{1D831CDE-AA16-4BC9-AEDD-DE1B74F37B79}"
+	ProjectSection(SolutionItems) = preProject
+		.build\build.bat = .build\build.bat
+		.build\build.proj = .build\build.proj
+		.build\README.txt = .build\README.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".test", ".test", "{B7BE2FDD-F378-4378-AF50-E90492182E17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestMSBuildProject", "TestMSBuildProject", "{F2D0AEBF-A014-4FC5-8259-D402D36C4174}"
+	ProjectSection(SolutionItems) = preProject
+		.test\TestMSBuildProject\build.bat = .test\TestMSBuildProject\build.bat
+		.test\TestMSBuildProject\build.proj = .test\TestMSBuildProject\build.proj
+		.test\TestMSBuildProject\README.txt = .test\TestMSBuildProject\README.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".common", ".common", "{FDBCA84C-4E55-4360-B224-9AE432E357B0}"
+	ProjectSection(SolutionItems) = preProject
+		.common\CommonAssemblyInfo.cs = .common\CommonAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49280A9A-B74C-443A-A158-D9C1BE0B99E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49280A9A-B74C-443A-A158-D9C1BE0B99E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49280A9A-B74C-443A-A158-D9C1BE0B99E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49280A9A-B74C-443A-A158-D9C1BE0B99E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD41F572-453B-4A02-8BF2-06425C6F6AC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD41F572-453B-4A02-8BF2-06425C6F6AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD41F572-453B-4A02-8BF2-06425C6F6AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD41F572-453B-4A02-8BF2-06425C6F6AC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D68B86E-9CDB-4438-BEB2-12760F379F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D68B86E-9CDB-4438-BEB2-12760F379F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D68B86E-9CDB-4438-BEB2-12760F379F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D68B86E-9CDB-4438-BEB2-12760F379F58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF1378C2-9119-47EE-88EA-37EC92E3F8B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF1378C2-9119-47EE-88EA-37EC92E3F8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF1378C2-9119-47EE-88EA-37EC92E3F8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF1378C2-9119-47EE-88EA-37EC92E3F8B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28453C7F-EEB0-47B3-8A21-C6C68EAB1ED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28453C7F-EEB0-47B3-8A21-C6C68EAB1ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28453C7F-EEB0-47B3-8A21-C6C68EAB1ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28453C7F-EEB0-47B3-8A21-C6C68EAB1ED6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F2D0AEBF-A014-4FC5-8259-D402D36C4174} = {B7BE2FDD-F378-4378-AF50-E90492182E17}
+	EndGlobalSection
+EndGlobal
