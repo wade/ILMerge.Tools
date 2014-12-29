@@ -29,11 +29,11 @@ The **ILMerge.Tools.MSBuildToolTask** NuGet package does not have any hard depen
 To use the **ILMerge.Tools.MSBuildToolTask** in your MSBuild project, add the following `<UsingTask />` element to your project file:
 
     <UsingTask
-        AssemblyFile="$(SolutionDir)packages\ILMerge.Tools.MSBuildToolTask.2.14.1203\tools\ILMerge.Tools.MSBuildToolTask.dll"
+        AssemblyFile="$(SolutionDir)packages\ILMerge.Tools.MSBuildToolTask.2.14.1208\tools\ILMerge.Tools.MSBuildToolTask.dll"
         TaskName="ILMerge.Tools.MSBuildToolTask.ILMergeTool"
         />
 
-The value of the `AssemblyFile` attribute above is the full path and file name of the **ILMerge.Tools.MSBuildToolTask.dll** assembly file and the example assumes your have the `SolutionDir` property configured and that the `packages` directory resides under the solution directory and that you have installed the **ILMerge.Tools.MSBuildToolTask.2.14.1203** NuGet package. You must adjust the value as necessary for your project.
+The value of the `AssemblyFile` attribute above is the full path and file name of the **ILMerge.Tools.MSBuildToolTask.dll** assembly file and the example assumes your have the `SolutionDir` property configured and that the `packages` directory resides under the solution directory and that you have installed the **ILMerge.Tools.MSBuildToolTask.2.14.1208** NuGet package. You must adjust the value as necessary for your project.
 
 The value of the `TaskName` attribute above is the full namespace and type name of the task.  
 
@@ -52,7 +52,7 @@ Additionally, if your copy of ILMerge has a different file name than the default
 Here is an example excerpt from an MSBuild project file that sets up the **ILMergeTool** task for use.
 
     <UsingTask
-        AssemblyFile="$(SolutionDir)packages\ILMerge.Tools.MSBuildToolTask.2.14.1203\tools\ILMerge.Tools.MSBuildToolTask.dll"
+        AssemblyFile="$(SolutionDir)packages\ILMerge.Tools.MSBuildToolTask.2.14.1208\tools\ILMerge.Tools.MSBuildToolTask.dll"
         TaskName="ILMerge.Tools.MSBuildToolTask.ILMergeTool"
         />
 
@@ -66,7 +66,7 @@ Here is an example excerpt from an MSBuild project file that sets up the **ILMer
 		<ILMergeTool
 			InputAssemblies="@(ILMergeInputAssemblies)"
 			OutputFile="$(MergedOutDir)MyPrimaryAssembly.dll"
-			ToolPath="$(SolutionDir)packages\ILMerge.Tools.2.14.1203\tools\ILMerge.exe"
+			ToolPath="$(SolutionDir)packages\ILMerge.Tools.2.14.1208\tools\ILMerge.exe"
 			/>
 	</Target>
 
