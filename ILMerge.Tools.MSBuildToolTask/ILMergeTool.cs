@@ -60,6 +60,33 @@ namespace ILMerge.Tools.MSBuildToolTask
 		#region " ILMerge Properties "
 
 		/// <summary>
+		/// Gets or sets a value indicating whether duplicate type names are allowed.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if duplicate type names are allowed; otherwise, <c>false</c>.
+		/// </value>
+		/// <remarks>
+		/// The normal behavior of ILMerge is to not allow there to be more than one public type with the same name.
+		/// If such a duplicate is found, then an exception is thrown. However, ILMerge can just rename the type so
+		/// that it no longer causes a conflict. For private types, this is not a problem since no outside client can
+		/// see it anyway, so ILMerge just does the renaming by default. For public types, it is not often a useful
+		/// feature to have it renamed. However, there are situations where it is needed. In particular, for obfuscated
+		/// assemblies, it seems that the obfuscator defines an attribute and creates an assembly-level attribute for
+		/// the obfuscated assembly using that attribute. This would mean that obfuscated assemblies cannot be merged.
+		/// So this option allows the user to either allow all public types to be renamed when they are duplicates,
+		/// or to specify it for arbitrary type names.
+		/// <para>
+		///		If this property is set to <c>true</c> and the <see cref="DuplicateTypeNames"/> property is null or empty,
+		///		the "/allowDup" switch with no type names is specified on the command-line.
+		///		If there is one or more values in the <see cref="DuplicateTypeNames"/> property, the "/allowDup:typeName"
+		///		switch is specified for each type name regardless of the <see cref="AllowDuplicateTypeNames"/> property value.
+		/// </para>
+		/// <para>Default: <c>false</c></para>
+		/// <para>Command line option: /allowDup</para>
+		/// </remarks>
+		public bool AllowDuplicateTypeNames { get; set; }
+
+		/// <summary>
 		/// Gets or sets a value indicating whether any assembly-level attributes names that have the same type are copied over
 		/// into the target directory as long as the definition of the attribute type specifies that "AllowMultiple" is true.
 		/// </summary>
@@ -512,6 +539,19 @@ namespace ILMerge.Tools.MSBuildToolTask
 
 			var builder = new CommandLineBuilder();
 
+			if (null != DuplicateTypeNames && DuplicateTypeNames.Length > 0)
+			{
+				foreach (var item in DuplicateTypeNames)
+				{
+					var typeName = item.ItemSpec;
+					builder.AppendSwitch(string.Format("/allowDup:{0}", typeName.Trim()));
+				}
+			}
+			else if (AllowDuplicateTypeNames)
+			{
+				builder.AppendSwitch("/allowDup");
+			}
+
 			if (AllowMultipleAssemblyLevelAttributes)
 				builder.AppendSwitch("/allowMultiple");
 
@@ -535,15 +575,6 @@ namespace ILMerge.Tools.MSBuildToolTask
 
 			if (DelaySign)
 				builder.AppendSwitch("/delaysign");
-
-			if (null != DuplicateTypeNames && DuplicateTypeNames.Length > 0)
-			{
-				foreach (var item in DuplicateTypeNames)
-				{
-					var typeName = item.ItemSpec;
-					builder.AppendSwitch(string.Format("/allowDup:{0}", typeName.Trim()));
-				}
-			}
 
 			if (FileAlignment != DefaultFileAlignment)
 				builder.AppendSwitch(string.Format("/align:{0}", FileAlignment));
