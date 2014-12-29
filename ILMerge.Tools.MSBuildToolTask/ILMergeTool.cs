@@ -27,7 +27,6 @@ namespace ILMerge.Tools.MSBuildToolTask
 		public ILMergeTool()
 		{
 			// Set default property values.
-			AllowDuplicateResources = false;
 			AllowMultipleAssemblyLevelAttributes = false;
 			AllowWildCards = false;
 			AllowZeroPeKind = false;
@@ -59,18 +58,6 @@ namespace ILMerge.Tools.MSBuildToolTask
 		#endregion " Default Constructor "
 
 		#region " ILMerge Properties "
-
-		/// <summary>
-		/// Gets or sets a value indicating whether to allow duplicate resources.
-		/// </summary>
-		/// <value>
-		/// <c>true</c> to allow duplicate resources; otherwise, <c>false</c>.
-		/// </value>
-		/// <remarks>
-		/// <para>Default: <c>false</c></para>
-		/// <para>Command line option: /allowDuplicateResources</para>
-		/// </remarks>
-		public bool AllowDuplicateResources { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether any assembly-level attributes names that have the same type are copied over
@@ -524,9 +511,6 @@ namespace ILMerge.Tools.MSBuildToolTask
 			#endregion " ILMerge.exe Command-Line Arguments "
 
 			var builder = new CommandLineBuilder();
-
-			if (AllowDuplicateResources)
-				builder.AppendSwitch("/allowDuplicateResources");
 
 			if (AllowMultipleAssemblyLevelAttributes)
 				builder.AppendSwitch("/allowMultiple");
