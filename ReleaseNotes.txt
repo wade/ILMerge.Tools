@@ -1,0 +1,26 @@
+ILMerge.Tools.MSBuildToolTask Release Notes
+-----------------------------------------------------------------------------------------
+GitHub Repository: https://github.com/wade/ILMerge.Tools
+NuGet Package: https://www.nuget.org/packages/ILMerge.Tools.MSBuildToolTask
+
+
+-----------------------------------------------------------------------------------------
+2014-12-29 - Version Compatibility Release
+ILMerge.Tools.MSBuildToolTask 2.14.1208
+GitHub commit dd02836c914b290981d3505cda948c77804acd2c
+https://github.com/wade/ILMerge.Tools/commit/dd02836c914b290981d3505cda948c77804acd2c
+
+NuGet Package:
+https://www.nuget.org/packages/ILMerge.Tools.MSBuildToolTask/2.14.1208
+
+
+-----------------------------------------------------------------------------------------
+2014-12-08 - Initial Release
+ILMerge.Tools.MSBuildToolTask 2.14.1203
+GitHub commit 44429e9f925b95e260d2320d96045dd9bd59f00a
+https://github.com/wade/ILMerge.Tools/commit/44429e9f925b95e260d2320d96045dd9bd59f00a
+
+NuGet Package:
+https://www.nuget.org/packages/ILMerge.Tools.MSBuildToolTask/2.14.1203
+
+<EOF>
