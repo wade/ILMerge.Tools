@@ -16,7 +16,11 @@ The NuGet package installs the **ILMerge.Tools.MSBuildToolTask.dll** assembly to
 
 
 ## Version ##
-The version of the **ILMerge.Tools.MSBuildToolTask** assembly and NuGet package reflects the latest version of ILMerge for which is was tested against, but this does not mean that you must only use it with that version of ILMerge. As long as the ocmmand-line interface of the version of ILMerge you are using is compatible with ILMerge.Tools.MSBuildToolTask and the options you choose to configure, it should work fine, even against future versions barring any breaking command-line interface changes or future options.
+The **ILMerge.Tools.MSBuildToolTask** assembly and NuGet package uses a four-part version number. The first 3 parts of the version reflects the latest version of ILMerge for which is was tested against. The fourth part of the version number is the revision of the ILMerge.Tools project and is incremented independently of the ILMerge version number.  
+
+For example, ILMerge.Tools.MSBuildToolTask version 2.14.1208.43 was tested against ILMerge 2.14.1208 and its private revision number is 43, which has nothing to do with ILMerge and is only used to track changes to the ILMerge.Tools project. If on a later date a new release of ILMerge.Tools.MSBuildToolTask with version 2.14.1208.48 is released, it still was tested against ILMerge 2.14.1208 but has changes that only affect the ILMerge.Tools.MSBuildToolTask project, such as fixes or other updates.  
+
+This does not mean that you must only use it with the same version of ILMerge. As long as the command-line interface of the version of ILMerge you are using is compatible with ILMerge.Tools.MSBuildToolTask and the options you choose to configure, it should work fine, even against future versions barring any breaking command-line interface changes or future options.
 
 
 ## Dependencies ##
