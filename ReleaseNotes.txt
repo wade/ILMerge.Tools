@@ -5,6 +5,22 @@ NuGet Package: https://www.nuget.org/packages/ILMerge.Tools.MSBuildToolTask
 
 
 -----------------------------------------------------------------------------------------
+2014-12-30 - Updated Feature Release
+ILMerge.Tools.MSBuildToolTask 2.14.1208.49
+GitHub commit 753f095bbc6fde783f546787277e47edccf6ede3
+https://github.com/wade/ILMerge.Tools/commit/753f095bbc6fde783f546787277e47edccf6ede3
+
+NuGet Package:
+https://www.nuget.org/packages/ILMerge.Tools.MSBuildToolTask/2.14.1208.49
+
+Notes:
+* Still targeting ILMerge 2.14.1208.
+* Moving to four-part versioning for the ILMerge.Tools project.
+* Added support for the "/allowDup" switch with and without one or more
+  specific type names with the use of the new AllowDuplicateTypeNames property.
+
+
+-----------------------------------------------------------------------------------------
 2014-12-29 - Version Compatibility Release
 ILMerge.Tools.MSBuildToolTask 2.14.1208
 GitHub commit dd02836c914b290981d3505cda948c77804acd2c
@@ -13,6 +29,11 @@ https://github.com/wade/ILMerge.Tools/commit/dd02836c914b290981d3505cda948c77804
 NuGet Package:
 https://www.nuget.org/packages/ILMerge.Tools.MSBuildToolTask/2.14.1208
 
+Notes:
+* Updates to target ILMerge 2.14.1208.
+* Removed the "Allow Duplicate Resources" because it is not supported by ILMerge despite
+  the fact that the "/allowDuplicateResources" switch appears in the ILMerge
+  documentation.
 
 -----------------------------------------------------------------------------------------
 2014-12-08 - Initial Release
@@ -22,5 +43,8 @@ https://github.com/wade/ILMerge.Tools/commit/44429e9f925b95e260d2320d96045dd9bd5
 
 NuGet Package:
 https://www.nuget.org/packages/ILMerge.Tools.MSBuildToolTask/2.14.1203
+
+Notes:
+* First release of ILMerge.Tools.MSBuildToolTask targeting ILMerge 2.14.1203.
 
 <EOF>
