@@ -552,9 +552,6 @@ namespace ILMerge.Tools.MSBuildToolTask
 				builder.AppendSwitch("/allowDup");
 			}
 
-			if (AllowMultipleAssemblyLevelAttributes)
-				builder.AppendSwitch("/allowMultiple");
-
 			if (AllowWildCards)
 				builder.AppendSwitch("/wildcards");
 
@@ -569,6 +566,9 @@ namespace ILMerge.Tools.MSBuildToolTask
 
 			if (CopyAttributes)
 				builder.AppendSwitch("/copyattrs");
+
+			if (AllowMultipleAssemblyLevelAttributes)
+				builder.AppendSwitch("/allowMultiple");
 
 			if (false == DebugInfo)
 				builder.AppendSwitch("/ndebug");
